@@ -357,10 +357,14 @@ const people = [
 // eslint-disable-next-line no-console
 console.log(people); // you can remove it
 
+// 1. Знаходимо таблицю на сторінці
 const dashboardTable = document.querySelector('.dashboard');
 
 // 2. Перевіряємо, чи таблицю знайдено
 if (dashboardTable) {
+  // Створюємо елемент tbody для правильної структури таблиці
+  const tableBody = document.createElement('tbody');
+
   // 3. Перебираємо масив людей
   for (const person of people) {
     // 3.1 Розраховуємо вік та століття
@@ -380,7 +384,21 @@ if (dashboardTable) {
 
     // 3.4 Заповнюємо комірки даними
     tdName.textContent = person.name;
-    tdGender.textContent = person.sex; // 'm' або 'f'
+
+    // --- ВИПРАВЛЕННЯ ТУТ ---
+    // Перетворюємо 'm'/'f' на 'Male'/'Female'
+    let genderText = '';
+
+    if (person.sex === 'm') {
+      genderText = 'Male';
+    } else if (person.sex === 'f') {
+      genderText = 'Female';
+    } else {
+      genderText = person.sex; // На випадок інших значень
+    }
+    tdGender.textContent = genderText;
+    // --- КІНЕЦЬ ВИПРАВЛЕННЯ ---
+
     tdBorn.textContent = person.born;
     tdDied.textContent = person.died;
     tdAge.textContent = age;
@@ -394,10 +412,11 @@ if (dashboardTable) {
     tableRow.appendChild(tdAge);
     tableRow.appendChild(tdCentury);
 
-    // 3.6 Додаємо готовий рядок <tr> до таблиці <table>
-    dashboardTable.appendChild(tableRow);
+    // 3.6 Додаємо готовий рядок <tr> до <tbody>
+    tableBody.appendChild(tableRow);
   }
-} else {
-  // Цей блок виконається, якщо таблиця з класом 'dashboard' не знайдена
-  // Можна залишити порожнім, якщо console.error не потрібен
+
+  // 4. Додаємо готовий <tbody> (з усіма рядками) до <table>
+  dashboardTable.appendChild(tableBody);
 }
+// Немає else з console.error, якщо таблицю не знайдено
