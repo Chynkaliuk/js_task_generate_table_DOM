@@ -357,4 +357,47 @@ const people = [
 // eslint-disable-next-line no-console
 console.log(people); // you can remove it
 
-// write your code here
+const dashboardTable = document.querySelector('.dashboard');
+
+// 2. Перевіряємо, чи таблицю знайдено
+if (dashboardTable) {
+  // 3. Перебираємо масив людей
+  for (const person of people) {
+    // 3.1 Розраховуємо вік та століття
+    const age = person.died - person.born;
+    const century = Math.ceil(person.died / 100);
+
+    // 3.2 Створюємо рядок <tr>
+    const tableRow = document.createElement('tr');
+
+    // 3.3 Створюємо 6 комірок <td>
+    const tdName = document.createElement('td');
+    const tdGender = document.createElement('td');
+    const tdBorn = document.createElement('td');
+    const tdDied = document.createElement('td');
+    const tdAge = document.createElement('td');
+    const tdCentury = document.createElement('td');
+
+    // 3.4 Заповнюємо комірки даними
+    tdName.textContent = person.name;
+    tdGender.textContent = person.sex; // 'm' або 'f'
+    tdBorn.textContent = person.born;
+    tdDied.textContent = person.died;
+    tdAge.textContent = age;
+    tdCentury.textContent = century;
+
+    // 3.5 Додаємо комірки <td> до рядка <tr>
+    tableRow.appendChild(tdName);
+    tableRow.appendChild(tdGender);
+    tableRow.appendChild(tdBorn);
+    tableRow.appendChild(tdDied);
+    tableRow.appendChild(tdAge);
+    tableRow.appendChild(tdCentury);
+
+    // 3.6 Додаємо готовий рядок <tr> до таблиці <table>
+    dashboardTable.appendChild(tableRow);
+  }
+} else {
+  // Цей блок виконається, якщо таблиця з класом 'dashboard' не знайдена
+  // Можна залишити порожнім, якщо console.error не потрібен
+}
